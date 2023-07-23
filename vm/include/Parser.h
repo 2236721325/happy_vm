@@ -12,15 +12,19 @@ namespace vm
     class Parser
     {
     private:
-        Lexer& lex;
+        std::unique_ptr<Lexer> lexer;
     public:
         Parser(Lexer& lex)
-        :lex(lex)
         {
+            this->lexer=std::make_unique<Lexer>(lex);
         }
-
+        Instruction ParseInstruction();
+        Directive ParseDirective();
+        Block ParseBlock();
         Block Parse();
 
+
+        LabelDirective ParseLabelDirective();
 
     };
 }

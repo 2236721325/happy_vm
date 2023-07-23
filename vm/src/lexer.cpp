@@ -71,6 +71,15 @@ namespace vm
                 Next();
 
                 return Token(TokenKind::Sep_Rparen, ")", Line);
+            case ':':
+                Next();
+                return Token(TokenKind::Sep_Colon, ":", Line);
+            case '[':
+                Next();
+                return Token(TokenKind::Sep_Lbracket, "[", Line);
+            case ']':
+                Next();
+                return Token(TokenKind::Sep_Rparen, "]", Line);
         }
 
         if (std::isdigit(Look()))
@@ -159,9 +168,9 @@ namespace vm
             {
                 if (!is_first_dot)
                 {
-                    SyntaxException::Throw("A float number has too many dot char!",Line);
+                    SyntaxException::Throw("A float number has too many dot char!", Line);
                 }
-                is_first_dot= false;
+                is_first_dot = false;
                 Next();
                 continue;
             }
@@ -195,6 +204,16 @@ namespace vm
         }
 
         return Token(TokenKind::Identifier, str, Line);
+    }
+
+    Token Lexer::NextTokenOfKind(TokenKind kind)
+    {
+        auto next=NextToken();
+        if(next.Kind!=kind)
+        {
+            SyntaxException::UnExpectToken(next);
+        }
+        return next;
     }
 
 }

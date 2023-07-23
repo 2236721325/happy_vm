@@ -15,6 +15,7 @@
 #include "Format.h"
 #include "cstring"
 #include "magic_enum.hpp"
+#include <array>
 
 
 

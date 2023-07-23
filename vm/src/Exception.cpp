@@ -22,4 +22,13 @@ namespace vm
         );
 
     }
+
+    void SyntaxException::UnExpectToken(Token token)
+    {
+        throw SyntaxException(
+                "Token Error",
+                util::Format("Unexpected Token {} ", token.ToString()),
+                token.Line
+        );
+    }
 }

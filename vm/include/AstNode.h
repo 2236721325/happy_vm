@@ -5,6 +5,8 @@
 #ifndef HAPPY_VM_ASTNODE_H
 #define HAPPY_VM_ASTNODE_H
 
+#include <utility>
+
 #include "pch.h"
 namespace vm
 {
@@ -15,21 +17,54 @@ namespace vm
     {
     public:
         size_t Address;
+
+        virtual std::string ToString()
+        {
+            return "Directive";
+        }
     };
 
-    class Instruction
+
+
+
+    class Instruction:public Directive
     {
+    private:
     public:
+    virtual std::vector<std::byte> GetBytes()=0;
 
-    };
-
-
-    class Fuction
+    std::string ToString()
     {
-
+        return "Instruction";
+    }
     };
+
+
+
     class Block
     {
+    public:
+        std::shared_ptr<std::vector<Directive>> Instructions;
+        Block(std::shared_ptr<std::vector<Directive>> instructions)
+        :Instructions(instructions)
+        {
+            
+        }
+
+    };
+
+
+
+    class LabelDirective: public Directive
+    {public:
+        LabelDirective(size_t address)
+        {
+            Address=address;
+        }
+        std::string ToString()
+        {
+            return util::Format("[{0}]->{ LabelDirective }",Address);
+        }
 
     };
 }

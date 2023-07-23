@@ -47,6 +47,9 @@ namespace vm
         Sep_Lparen,
         Sep_Rparen,
         Sep_Comma,
+        Sep_Colon,
+        Sep_Lbracket,
+        Sep_Rbracket,
         Token_EOF,
 
 
@@ -113,8 +116,15 @@ namespace vm
         {
 
         }
+        Lexer(const Lexer& other)
+        :code(other.code)
+        {
+
+        }
         Token NextToken();
         Token LookAhead();
+
+        Token NextTokenOfKind(TokenKind kind);
         char Next(size_t n=1)
         {
             char ret= code[cur_pos];
@@ -134,7 +144,6 @@ namespace vm
             return cur_pos <= code.length()-1;
         }
         void SkipWhiteSpace();
-
         void SkipComment();
 
         bool IsNewLine()

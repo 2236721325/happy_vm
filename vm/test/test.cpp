@@ -41,7 +41,7 @@ add(int,int)->int ;（自动根据参数数量开辟stack)
 TEST_CASE( "simple function Parser test", "[lexer]" )
 {
     auto lex = vm::Lexer(R"(
-add(int,int)->int ;（自动根据参数数量开辟stack)
+add:
     larg ax,0 ;0 the first arg ->load from stack
     larg bx,1 ;1 the second arg
     add ax,bx
